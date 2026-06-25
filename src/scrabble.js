@@ -18,6 +18,7 @@ class ScrabbleStartOverlay extends GridLayout {
      * @param {GameState} state
      */
     set state(state) {
+        this.innerHTML = "";
         let hide = true;
         if (state) {
             let winInfo = state.winInfo;
