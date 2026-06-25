@@ -1,0 +1,540 @@
+:host {
+    --ink: #252238;
+    --cell: #bfc0ca;
+    /* --tw: #c7515b;
+    --dw: #eca8a8;
+    --tl: #176ba0;
+    --dl: #72afd3; */
+
+    --tw: #d4390c;
+    --dw: #e1870b;
+    --tl: #03568b;
+    --dl: #2197dc;
+    --line: #d3d1e4;
+
+    --player-0: #e6630b;
+    --player-0-soft: #f4e0d1;
+    --player-1: #1396f4;
+    --player-1-soft: #d1e4f4;
+
+    --panel: rgba(255, 255, 255, 0.94);
+    --panel-soft: #f0eff7;
+
+    --i-bag: url('data:image/svg+xml,<%3Fxml version="1.0" encoding="UTF-8"%3F><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 195.577 219.85"><path d="M157.231,3.697c-.851-1.437-2.241-1.666-3.803-2.202-6.135-2.105-12.587-2.139-18.434,1.419-8.185,4.981-17.474,6.474-26.068,1.188-6.38-3.924-14.512-5.62-21.646-2.437-4.776,2.13-8.992,5.021-14.292,5.614C60.739,8.649,54.182-.251,45.578.034c-4.528.15-9.016.834-13.247,2.604-2.181.912-2.21,3.726-1.214,5.597l10.834,20.341c.202.38.396.75.592,1.123l5.399,1.843,1.227.288c3.817.895,7.717,1.823,11.607,2.881l-3.281-8.978c-.854-2.334.348-4.918,2.682-5.771,2.332-.85,4.918.347,5.771,2.682l5.175,14.159c.022.06.028.123.047.184.825-.016,1.717-.022,2.682.077l13.714,1.398c1.692.171,3.355.313,4.991.371l.038-5.531c.015-1.752.009-2.988-.2-4.21-.419-2.45,1.228-4.775,3.677-5.194,2.448-.421,4.775,1.227,5.194,3.677.333,1.949.347,3.704.329,5.796l-.037,5.412c4.807-.187,9.658-.824,14.723-1.492,1.031-.136,2.08-.273,3.132-.407.024-1.597.345-3.066.727-4.401.298-1.04.553-2.095.822-3.211.894-3.704,1.817-7.533,4.388-11,1.48-1.995,4.297-2.416,6.296-.935,1.996,1.48,2.414,4.299.935,6.295-1.481,1.997-2.124,4.663-2.869,7.75-.279,1.159-.569,2.357-.919,3.58-.012.041-.018.073-.03.112l11.604-3.003,3.515-1.601c.218-.106.442-.195.674-.266l2.143-.653c.178-.485.377-.972.615-1.469l9.734-20.28c.745-1.552.84-2.993.182-4.104Z"/><path d="M195.406,203.243l-4.047-14.738c-2.519-9.177-4.445-17.985-5.402-27.449l-2.49-24.617c-1.791-17.708-5.529-34.602-10.987-51.552-4.831-15.004-11.415-28.445-20.739-41.12-1.222-1.661-1.991-3.655-2.926-5.453l-1.29.393-.172.084c-.045.022-.091.043-.136.064l-3.502,1.578c-.233.104-.475.189-.722.253l-11.573,2.995.045.088c5.474,8.021,8.823,17.46,9.959,28.063.265,2.471-1.524,4.689-3.995,4.954-.163.017-.325.026-.485.026-2.27,0-4.222-1.713-4.469-4.021-.985-9.204-3.874-17.33-8.584-24.155-.11-.159-.21-.326-.299-.498l-1.307-2.54c-1.619.198-3.239.405-4.829.615-5.206.685-10.549,1.382-15.96,1.571l-.084,12.28c-.017,2.475-2.028,4.469-4.499,4.469h-.031c-2.485-.017-4.486-2.045-4.47-4.531l.083-12.162c-1.997-.061-3.953-.234-5.834-.424l-13.729-1.399c-.575-.06-1.269-.045-2.002-.028-.817.017-1.722.036-2.683-.039l-.772,1.615c-.049.103-.103.204-.159.303-5.534,9.619-9.136,20.741-10.705,33.059-.289,2.272-2.227,3.932-4.458,3.932-.19,0-.382-.012-.574-.037-2.466-.314-4.21-2.567-3.896-5.033,1.706-13.389,5.637-25.543,11.678-36.135-4.06-1.131-8.201-2.11-12.249-3.06l-1.445-.339c-.144-.033-.285-.074-.424-.122l-2.829-.966-3.485,3.161c-9.734,11.362-16.049,24.497-20.388,38.784-4.553,14.991-7.176,29.891-8.268,45.402l-1.132,16.085-1.608,30.179c-1.516,12.629-8.225,28.548-7.477,33.503,1.333,8.829,8.2,13.47,16.749,13.477l119.528.092,21.405-.06,23.623-.284c8.522-.103,15.396-7.816,14.043-16.262Z"/></svg>');
+    --i-folder: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16.082 13.841"><path d="M13.544,2.537h-3.609c0-1.401-1.136-2.537-2.537-2.537H2.537C1.142,0,0,1.142,0,2.537v8.766c0,1.396,1.142,2.537,2.537,2.537h11.007c1.396,0,2.537-1.142,2.537-2.537v-6.229c0-1.396-1.142-2.537-2.537-2.537Z"/></svg>');
+  
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: min(1.5vw, 20px);
+}
+[shadow] {
+    width: 100%;
+    height: 100%;
+    padding: var(--gap);
+    box-sizing: border-box;
+}
+
+.grid-icon {
+    font-size: 1.8em;
+}
+
+grid-layout[my-turn="false"] > access-button {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+* { box-sizing: border-box; }
+
+.svg-defs {
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+
+.main {
+    display: grid;
+    gap: var(--gap);
+    grid-template-columns: 1fr auto;
+}
+
+
+.start-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgb(194 194 212 / 42%);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+}
+.game-over-card {
+    font-size: 2em;
+    gap: 0.5em;
+    background: var(--panel-soft);
+    border-radius: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1em;
+}
+.game-over-card h1 {
+    margin: 0;
+}
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~ SCRABBLE PLAY PANEL  ~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+scrabble-player-panel {
+    display: flex;
+    flex-direction: column;
+}
+.board-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~  SCRABLE BOARD ~~~~~~~~~~~~~~~~ */
+
+scrabble-board {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    aspect-ratio: 1;
+}
+
+/* ~~~~~~~~~~~~~~~  BOARD SQUARES ~~~~~~~~~~~~~~~~ */
+
+.board-square {    
+    color: white;
+    --bg: #bfc0ca;
+    position: relative;
+}
+[tw] { --bg: var(--tw); }
+[dw] { --bg: var(--dw); }
+[tl] { --bg: var(--tl); }
+[dl] { --bg: var(--dl); }
+
+/* All child SVGs inside a board square pass pointer events through to the
+   square element, ensuring dragstart always fires on the access-button. */
+.board-square .tile-letters {
+    pointer-events: none;
+}
+
+.board-square .placed {
+    color: black;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.board-square.dragging { opacity: 0.4; }
+
+.board-square:hover,
+.board-square[hover] {
+    filter: brightness(1.05);
+}
+
+/* Board square visual feedback when a tile is dragged over it */
+.board-square.drag-over {
+    filter: brightness(1.2) !important;
+}
+.board-square.drag-over .outline {
+    stroke: #4caf50;
+    opacity: 1;
+}
+
+
+/* ~~~~~~~~~~~~~~~  BOARD LABELS ~~~~~~~~~~~~~~~~ */
+
+.board-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+.board-label svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* ~~~~~~~~~~~~~~~  BOARD HIGHLIGHTS ~~~~~~~~~~~~~~~~ */
+
+.highlight {
+    display: flex;
+    position: relative;
+    pointer-events: none;
+    --color: #e6280b;
+}
+.highlight svg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+}
+.highlight .label {
+    color: white;
+}
+
+.highlight .label rect {
+    fill: var(--color)
+}
+
+.highlight.group .outline {
+    opacity: 1;
+    stroke-linejoin: round;
+}
+.highlight .outline {
+    fill: none;
+    stroke: var(--color);
+    opacity: 0.5;
+    stroke-linejoin: round;
+}
+
+.highlight[valid] {
+    --color: #4caf50;
+}
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~  SCRABLE RACK  ~~~~~~~~~~~~~~~~ */
+
+scrabble-rack {
+    display: grid;
+    gap: 1px;
+    grid-template-columns: repeat(9, 1fr);
+    margin-top: 0.5em;
+    justify-content: center;
+    background: white;
+    padding: 1.5vw;
+    border-radius: 2vw;
+    border: 2px solid var(--player-0);
+}
+[player = "1"] scrabble-rack {
+    border-color: var(--player-1);
+}
+[my-turn="false"] scrabble-rack {
+    opacity: 0.5;
+    pointer-events: none;
+}
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~  TILES ~~~~~~~~~~~~~~~~~~~~ */
+
+.tile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+
+.tile-letters {
+    width: 100%;
+    height: 100%;
+}
+.tile-letters .bg { fill: var(--bg, white); }
+.tile-letters .outline { fill: none; stroke: red;  opacity: 0; }
+
+
+.tile.btn,
+.tile.rack {
+    cursor: pointer;
+    transition: 0.15s ease-out transform;
+}
+
+.tile.btn { --bg: #f7f7fb; }
+.tile.btn .outline { 
+    stroke: #ebebf5; 
+    opacity: 1;
+}
+
+
+.tile.btn:hover,
+.tile.btn[hover] {
+    --bg: #ebebf5;
+}
+
+.tile.btn:active,
+.tile.btn[active] {
+    --bg: #e0e0f0;
+    transform: scale(0.965);
+}
+
+.tile.rack .outline{
+    stroke: rgb(244, 124, 19)
+}
+
+.tile.rack:hover,
+.tile.rack[hover] {
+    transform: scale(1.05);
+}
+
+.tile.rack:active,
+.tile.rack[active] {
+    transform: scale(0.95);
+}
+
+.tile.rack[selected] .outline {
+    opacity: 1;
+}
+
+/* Placed tile on rack: semi-transparent, no interaction */
+.tile.rack[placed] {
+    opacity: 0.35;
+    cursor: default;
+}
+.tile.rack[placed]:hover,
+.tile.rack[placed][hover] {
+    transform: none;
+}
+.tile.rack[placed]:active,
+.tile.rack[placed][active] {
+    transform: none;
+}
+
+/* ~~~~~~~~~~~~~~~  PLAYER TAGS ~~~~~~~~~~~~~~~~ */
+span[player-tag] {
+    color: var(--player-0);
+}
+span[player-tag = "1"] {
+    color: var(--player-1);
+}
+i[player-tag] {
+    display: inline-block;
+    width: 0.6em;
+    height: 0.6em;
+    border-radius: 50%;
+    background-color: var(--player-0);
+}
+i[player-tag = "1"] {
+    background-color: var(--player-1);
+}
+
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~ SIDE PANEL ELELMENTS ~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+.side-panel {
+    width: 22vw;
+    display: grid;
+    gap: var(--gap);
+    grid-template-rows: auto auto 1fr;
+}
+
+/* ~~~~~~~~~~~~~~~  PANEL CARD ~~~~~~~~~~~~~~~~ */
+
+.panel-card {
+    background: var(--panel);
+    border-radius: 1em;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+.panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  padding: .5em 1em;
+  border-block-end: 0.08rem solid rgba(62, 56, 98, 0.12);
+}
+
+.panel-heading h2 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 1.1em;
+  font-weight: 750;
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+}
+
+.panel-heading span {
+  color: #8d89a5;
+  font-size: clamp(0.72rem, 1vw, 0.82rem);
+}
+
+/* ~~~~~~~~~~~~~~~ SCORE BOARD ~~~~~~~~~~~~~~~~ */
+
+.score-board {
+    display: flex;
+    border-radius: 1em;
+    justify-content: space-between;
+    border: 1px solid var(--line);
+    overflow: hidden;
+    gap: 1px;
+    background-color: var(--line);
+}
+
+
+.score-board .player-score {
+    --bg: var(--player-0-soft);
+
+    display: flex;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.5em;
+    width: 100%;
+    padding: 1em;
+    background: var(--panel);
+}
+
+.player-score[player="1"] {
+    --bg: var(--player-1-soft);
+}
+
+.player-score[current] {
+    background: var(--bg);
+}
+
+
+.score-board .player-score .player-name {
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+}
+
+.score-board .player-score .player-score-value {
+    font-size: 2em;
+}
+
+/* ~~~~~~~~~~~~~~~ TILE BAG LETTERS ~~~~~~~~~~~~~~~~ */
+
+.bag-card {
+  background: #f5f4fa;
+}
+
+.bag-letters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  align-content: flex-start;
+  padding: 0.75em;
+  overflow: hidden;
+}
+
+.bag-letter {
+  text-align: center;
+  font-size: 0.8em;
+  color: #202039;
+}
+
+/* ~~~~~~~~~~~~~~~  MOVE HISTORY ~~~~~~~~~~~~~~~~ */
+
+.history-icon,
+.bag-icon {
+  height: 1.5em;
+  width: 1.5em;
+  background-image: var(--i-bag);
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.history-icon {
+  background-image: var(--i-folder);
+}
+
+.history-card {
+  min-block-size: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.history-list-wrap {
+  position: relative;
+}
+
+.history-list {
+  overflow: auto;
+  padding:  var(--gap);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  scrollbar-width: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.history-list::-webkit-scrollbar { display: none; }
+
+.history-empty,
+.history-item {
+  background: #e9e8f3;
+  border-radius: clamp(0.62rem, 1vw, 0.86rem);
+  padding: clamp(0.9rem, 1.5dvh, 1.1rem);
+}
+
+.history-empty {
+  color: #77728f;
+  font-weight: 850;
+  text-align: center;
+}
+
+.history-meta,
+.history-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+}
+
+.history-meta {
+  color: #8d89a5;
+  font-size: clamp(0.74rem, 1vw, 0.84rem);
+  font-weight: 800;
+}
+
+.history-title {
+  margin-block-start: 0.25rem;
+  color: var(--ink);
+  font-size: clamp(0.92rem, 1.24vw, 1.04rem);
+  font-weight: 950;
+}
+
+.history-tiles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.34rem;
+  margin-block-start: 0.65rem;
+}
+.history-title i[use] {
+    opacity: 0.4;
+}
+.history-title i {
+    color: var(--bg, var(--ink));
+}
+
+
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~ MEDIA QUERIES  ~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+
+@media (max-aspect-ratio: 1) {
+    .main {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+    }
+    .side-panel {
+        display: flex;
+        grid-row: 1;
+        width: 100%;
+        flex-direction: column;
+    }
+  .bag-card {
+    display: none;
+  }
+  .history-card {
+    display: none;
+  }
+}

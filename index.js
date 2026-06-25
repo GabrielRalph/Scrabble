@@ -1,0 +1,96 @@
+import { GameState } from "./src/scrabble-state.js";
+import { ScrabbleGame } from "./src/scrabble.js";
+ScrabbleGame.defineHTMLElement(ScrabbleGame)
+
+const exampleState = '{"tiles":"1,A,0,1\\n1,A,3,1\\n2,A,4,0,5,9,6\\n2,A,5,1,10,6,13\\n2,A,6,0,7,5,0\\n2,A,8,1,5,6,3\\n2,C,0,1,3,12,9\\n2,C,1,1,1,11,11\\n2,D,3,0,3,10,8\\n1,E,0,1\\n1,E,2,0\\n2,E,4,1,8,6,13\\n2,E,5,1,6,8,5\\n2,E,8,0,7,7,0\\n1,E,9,0\\n1,F,0,0\\n2,G,0,0,4,8,10\\n2,G,1,0,7,4,0\\n2,H,0,1,5,5,1\\n2,I,1,1,4,10,7\\n2,L,0,1,9,6,13\\n2,L,1,1,2,11,11\\n2,L,3,0,1,13,12\\n2,M,0,0,5,10,8\\n2,M,1,0,4,6,4\\n2,N,2,1,4,11,7\\n1,N,5,1\\n2,O,2,1,6,5,1\\n2,O,5,1,3,11,9\\n2,O,7,0,1,12,12\\n2,R,1,0,4,9,6\\n1,R,2,0\\n1,R,3,0\\n2,R,4,1,8,5,1\\n2,S,0,0,6,7,2\\n1,T,5,1\\n1,U,1,1\\n1,U,2,1\\n2,V,0,0,7,6,0\\n2,W,0,1,6,9,5\\n2,W,1,1,5,4,3\\n2,X,0,0,8,7,2\\n1,Y,0,0\\n1,Z,0,0","moves":[0,0,0,0,0,0,0,0,0,0,0,0,0,0]}'
+const g2r = '{"t":"CAABJBNA_CABADFaA_CACAGMEA_CADBKDPA_CAEAGEIA_CAFBNIXA_CAGAHHAA_CAHABDcA_CAIBMObA_CBABAAdA_CBBAOLWA_CCAADDaA_CCBBJHRA_CDAABBmA_CDBAAIgA_CDCAAHgA_CDDBDAfA_CEAAELCA_CEBABFeA_CECAEGKA_CEDBOHZA_CEEAMKUA_CEFBKBNA_CEGAOOYA_CEHBIELA_CEIAGGIA_CEJBJITA_CEKBMDPA_CELAHIAA_CFABOGZA_CFBAHMEA_CGAABEeA_CGBAGFIA_CGCAIBMA_CHAAEDcA_CHBADEaA_CIABEOJA_CIBAOASA_CICBHNFA_CIDBBAfA_CIEAEJCA_CIFANCQA_CIGAOMYA_CIHBNGnA_CIIBACdA_CJABMIVA_CKAAMNiA_CLAAICMA_CLBANEQA_CLCAADcA_CLDBNDPA_CMAAEKCA_CMBBLObA_CNAALKUA_CNBBHOFA_CNCAFGKA_CNDAFJGA_CNEBJJTA_CNFBGIBA_COAALCOA_COBBJLTA_COCAFMEA_CODAAGgA_COEBGOJA_COFBMJVA_COGANLWA_COHBABdA_CPABKEhA_CPBADGKA_CQAANAQA_CRAACDcA_CRBBIHRA_CRCBCAfA_CRDABGeA_CREAGDIA_CRFBFOJA_CSAAAJgA_CSBAHGAA_CSCBHELA_CSDBLBNA_CTABFLDA_CTBBJKTA_CTCBNObA_CTDBKFhA_CTEBOBjA_CTFBEIBA_CUAANBQA_CUBBFIBA_CUCAKKUA_CUDAIDMA_CVABDLDA_CVBBFELA_CWABEFlA_CWBBOIXA_CXAALDOA_CYAAIOkA_CYBBMLVA_CZAAONYA","m":"00000000000000000000000000000000000000000","v":1}'
+const g3r = '{"t":"CAAACGiA_CABAKCUA_CACAHEQA_CADAHIAA_CAEBGDZA_CAFBMCXA_CAGAOAcA_CAHADJIA_CAIBOMPA_CBAAEHCA_CBBBEMFA_CCAABLKA_CCBAFDeA_CDABKJRA_CDBBJNHA_CDCAONSA_CDDBOBVA_CEABGKBA_CEBAFOEA_CECBMBVA_CEDBNMPA_CEEAOHYA_CEFBFKBA_CEGAHOGA_CEHALGOA_CEIBNBVA_CEJAFLEA_CEKALHOA_CELBCLfA_CFAABJIA_CFBBMAXA_CGAALEOA_CGBAKBUA_CGCAHHAA_CHAACHaA_CHBAOGYA_CIABKLJA_CIBAJEQA_CICAHJAA_CIDANDgA_CIEAOCcA_CIFABKKA_CIGAKDUA_CIHAFNEA_CIIAMFWA_CJABIGLA_CKABEKBA_CLAALFOA_CLBACJIA_CLCBDLfA_CLDBMDXA_CMAAOIYA_CMBAOLSA_CNAAHKAA_CNBBLLJA_CNCANFWA_CNDAHDeA_CNEAKEQA_CNFAEJCA_COABGMFA_COBBKKTA_COCBMJNA_CODADHaA_COEBNElA_COFAANMA_COGBLJRA_COHBIHLA_CPAAGEQA_CPBBAKnA_CQABJDbA_CRAAIEQA_CRBBLBVA_CRCBNJRA_CRDAIOGA_CREAFMEA_CRFBMINA_CSABJKHA_CSBABNKA_CSCBMMPA_CSDAOOSA_CTABJLHA_CTBBMHNA_CTCBKMTA_CTDAOFWA_CTEBMLJA_CTFAODcA_CUAABMKA_CUBBJMHA_CUCBMKNA_CUDAEICA_CVABKHjA_CVBAGOGA_CWABHMhA_CWBBGIDA_CXAAAOMA_CYABIIDA_CYBAJOGA_CZABGCZA","m":"0000000000000000000000000000000000000000000","v":1}'
+const g5r = '{"t":"CACBJGFA_BADA_CAEAIHAA_CBAAFBEA_BBBB_CCBAFDEA_BDCB_CDDAHJCA_BEAB_CEBAHHAA_BECB_CEFAFEEA_CEJAHKCA_BFAB_CHBBGKDA_CIDBIKDA_CIEBGGBA_CIHAFCEA_BMAB_CMBAJHAA_BNBA_CNDAHICA_BOFB_BOGA_CPAAFFEA_CRBBJKDA_CREBHGBA_CRFAHLCA_CSABKKDA_CSCBJEFA_CSDBFGBA_CTDAGHAA_CTEBFKDA_BUAA_CWABJFFA_BXAA_BYBA_BZAA","m":"000000","v":1}'
+const g6r = '{"t":"CAAABBeA_CABANHMA_CACBJGFA_CADANFMA_CAEAIHAA_CAFAMCKA_CAGAOISA_CAHAFOUA_CAIBAHZA_CBAAFBEA_CBBBJJNA_CCABCDPA_CCBAFDEA_CDAAEOUA_CDBBCIXA_CDCBHCHA_CDDAHJCA_CEABOFLA_CEBAHHAA_CECBHAHA_CEDBMHbA_CEEBAAfA_CEFAFEEA_CEGABGYA_CEHBCKXA_CEIAKEIA_CEJAHKCA_CEKAHOUA_CELAIBGA_CFABLCJA_CFBBHNRA_CGAANGMA_CGBBCJTA_CGCBJNRA_CHABFNVA_CHBBGKDA_BIAB_CIBBCCPA_CICADMWA_CIDBIKDA_CIEBGGBA_CIFBJLNA_CIGADEOA_CIHAFCEA_CIIBOBLA_CJAAAGYA_CKAACEOA_CLABCGXA_CLBADGYA_CLCALJaA_CLDAOHSA_CMABOALA_CMBAJHAA_CNABDNVA_CNBAHBGA_CNCAOCKA_CNDAHICA_CNEBJMNA_CNFAEMWA_COABINRA_COBAKJaA_COCBCHXA_CODBENVA_COEBLIdA_COFBLDJA_COGAGBGA_COHBACfA_CPAAFFEA_CPBBAIZA_CQAACMWA_CRABEJTA_CRBBJKDA_CRCAJBgA_CRDAGOUA_CREBHGBA_CRFAHLCA_CSABKKDA_CSBBAJZA_CSCBJEFA_CSDBFGBA_CTAAEEOA_CTBBCBPA_CTCAMJaA_CTDAGHAA_CTEBFKDA_CTFBOELA_CUAANCKA_CUBBODLA_CUCBFJTA_CUDBDJTA_CVAAABeA_CVBBLHbA_CWABJFFA_CWBADLcA_CXAALEIA_CYAAOKSA_CYBAMEIA_CZAAOJSA","m":"000000000000000000000000000000000","v":1}'
+const game = document.querySelector("scrabble-game");
+// game.state = '{"t":"CACBJGFA_BADA_CAEAIHAA_CBAAFBEA_BBBB_CCBAFDEA_BDCB_CDDAHJCA_BEAB_CEBAHHAA_BECB_CEFAFEEA_CEJAHKCA_BFAB_CHBBGKDA_CIDBIKDA_CIEBGGBA_CIHAFCEA_BMAB_CMBAJHAA_ANBAJD_CNDAHICA_BOFB_AOGAIG_CPAAFFEA_CRBBJKDA_CREBHGBA_CRFAHLCA_CSABKKDA_CSCBJEFA_CSDBFGBA_CTDAGHAA_CTEBFKDA_AUAAIF_CWABJFFA_AXAAIE_BYBA_BZAA","m":"000000","v":1}';
+
+const loading = ScrabbleGame.load()
+
+if (window.SquidlyAPI) {
+    window.SquidlyAPI.setGridSize(5,6);
+    let isCoop = false;
+    let playerIndex = null;
+
+    game.addEventListener("change", () => {
+        const state = game.state;
+        SquidlyAPI.firebaseSet("state", state);
+    })
+
+    game.addEventListener("start-game", (e) => {
+        isCoop = e.coop;
+        if (isCoop) {
+            game.playerIndex = null;
+        } else {
+            game.playerIndex = playerIndex;
+        }
+        console.log("Starting game. Coop mode:", isCoop);
+        SquidlyAPI.firebaseSet("coop", isCoop);
+        SquidlyAPI.firebaseSet("state", new GameState().toString());
+    })
+
+   
+    const [p1Name, p2Name] = await Promise.all([
+        await new Promise(resolve => {
+            SquidlyAPI.getSettings("host/profileSettings/name", (val) => {
+                resolve(val || "host")
+            });
+        }),
+        await new Promise(resolve => {
+            SquidlyAPI.getSettings("participant/profileSettings/name", (val) => {
+                console.log("participant name", val)
+                resolve(val || "participant")
+            });
+        }),
+        
+        await new Promise(resolve => {
+            SquidlyAPI.addSessionInfoListener((info) => {
+                console.log("session info", info)
+                playerIndex = info.user === "host" ? 0 : 1;
+                if (isCoop) {
+                    game.playerIndex = null;
+                } else {
+                    game.playerIndex = playerIndex;
+                }
+                resolve();
+            });
+        }),
+
+        await new Promise(resolve => {
+            SquidlyAPI.firebaseOnValue("state", (state) => {
+                game.state = state;
+                resolve();
+            });
+        }),
+        
+        await new Promise(resolve => {
+            SquidlyAPI.firebaseOnValue("coop", (isCoop) => {
+                isCoop = isCoop;
+                if (isCoop) {
+                    game.playerIndex = null;
+                } else {
+                    game.playerIndex = playerIndex;
+                }
+            });
+        })
+    ]);
+
+    // game.playerIndex = null;
+    game.players = [ p1Name, p2Name ]
+
+} else {
+    game.playerIndex = null;
+    game.addEventListener("change", () => {
+        // console.log("State changed. New state:", game.state);
+        console.log("State changed. New state:", game.state);
+    })
+}
+
+await loading;
+
+console.log("ScrabbleGame loaded and ready.")
