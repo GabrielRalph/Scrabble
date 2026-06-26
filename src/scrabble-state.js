@@ -769,7 +769,6 @@ class GameState {
 
     #computeHistory() {
         if (this.hasChanged || !this.#historyCache) {
-            // console.log("%ccomputing history", "color: orange; font-weight: bold;");
             const history = {};
             this.#tiles.forEach(tile => {
                 if (tile.state === TILE_STATES.placed || tile.state === TILE_STATES.pending) {
@@ -792,7 +791,6 @@ class GameState {
             this.#validationResults = this.#validateCurrentMove([...historyResult]);
             this.#clearChangeFlags();
         } else {
-            // console.log("%chistory up to date", "color: darkgreen; font-weight: bold;");
         }
     
     }
@@ -956,7 +954,7 @@ class GameState {
         return this.#tiles.map(tile => tile.snapshot);
     }
 
-    
+
     get moves() {
         return [...this.#moves];
     }

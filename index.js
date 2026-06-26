@@ -34,12 +34,10 @@ if (window.SquidlyAPI) {
 
     game.addEventListener("start-game", (e) => {
         isCoop = e.coop;
-        console.log("Starting game. Coop mode:", isCoop);
         SquidlyAPI.firebaseSet("coop", isCoop);
         SquidlyAPI.firebaseSet("state", new GameState().toString());
         updateCoopState(isCoop);
     })
-
     
    
     const [p1Name, p2Name] = await Promise.all([
@@ -50,14 +48,12 @@ if (window.SquidlyAPI) {
         }),
         await new Promise(resolve => {
             SquidlyAPI.getSettings("participant/profileSettings/name", (val) => {
-                console.log("participant name", val)
                 resolve(val || "participant")
             });
         }),
         
         await new Promise(resolve => {
             SquidlyAPI.addSessionInfoListener((info) => {
-                console.log("session info", info)
                 playerIndex = info.user === "host" ? 0 : 1;
                 resolve();
             });
@@ -73,11 +69,11 @@ if (window.SquidlyAPI) {
         await new Promise(resolve => {
             SquidlyAPI.firebaseOnValue("coop", (ic) => {
                 updateCoopState(ic);
+                resolve();
             });
         })
     ]);
-
-    // game.playerIndex = null;
+    
     game.players = [ p1Name, p2Name ]
 
 } else {
@@ -89,5 +85,3 @@ if (window.SquidlyAPI) {
 }
 
 await loading;
-
-console.log("ScrabbleGame loaded and ready.")

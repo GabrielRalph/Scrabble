@@ -13,7 +13,6 @@ export class ScoreBoard extends SvgPlus{
     set state(state) {
         this.innerHTML = "";
         let winInfo = state.winInfo;
-        console.log("scoreboard state", winInfo)
         let currentPlayerIndex = state.currentPlayerIndex;
         state.winInfo.scores.forEach(({name, score}, player) => {
             const ps = this.createChild("div", {class: "player-score", "player": player});

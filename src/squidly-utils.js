@@ -235,7 +235,6 @@ class Vector {
 
   set x(v){
     let n = parseNumber(v);
-    // console.log(n);
     this._x = n;
   }
   get x(){return this._x;}
@@ -446,7 +445,6 @@ function printChain(cdef) {
   let str = "";
   while (cdef && i > 0) {
     if (str) str += " <- ";
-    // console.log(cdef);
     let name = cdef.name;
     if (cdef === ObjectClass) {
       str += "o";

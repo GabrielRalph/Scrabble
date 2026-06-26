@@ -8,7 +8,6 @@ import * as OF from "./outline-finder.js"
 
 const tileImageLight = import.meta.resolve("../../assets/tile-f.png");
 const tileImageDark = import.meta.resolve("../../assets/tile-f-dark.png");
-console.log("Tile image light:", tileImageLight, "dark:", tileImageDark);
 
 const T_S = 1080;
 const T_B = 40;
@@ -64,7 +63,10 @@ const DEFS = `<svg class = "svg-defs" xmlns="http://www.w3.org/2000/svg" xmlns:x
         </defs>
     </svg>
 `
-
+function playSound(sound) {
+    let audio = new Audio(import.meta.resolve(`../../assets/sounds/${sound}.ogg`));
+    audio.play();
+}
 class TileLetters extends SvgPlus {
     constructor(options) {
         super("svg");
@@ -248,7 +250,11 @@ class BoardSquare extends AccessButton {
             if (selectedTile) {
                 board.placeTile(selectedTile.id, row, col);
             } else if (this.tile) {
-                board.returnTileToRack(this.tile.id);
+                const {tile} = this;
+                board.returnTileToRack(tile.id);
+                // tile.state = TILE_STATES.inPlayerRack;
+                // board.selectTile(tile)
+                playSound("to-rack");
             }
         });
 
@@ -472,7 +478,8 @@ class RackTile extends AccessButton {
             } else {
                 e.dataTransfer.setData("text/tile-id", tile.id);
                 e.dataTransfer.effectAllowed = "move";
-                // e.dataTransfer.setDragImage(IMAGE, 50,50);
+                console.log("dragstart selecting null");
+                rack.selectTile(null);
             }
         });
 
@@ -504,6 +511,7 @@ class TileButton extends AccessButton {
         return this.clientWidth * 1.2;
     }
 }
+
 export class Rack extends SvgPlus {
     #selectedTile = null;
     #selectedTiles = new Set();
@@ -595,6 +603,8 @@ export class Rack extends SvgPlus {
             for (let child of this.rack.children) {
                 child.selected = child.tile.id === tileId;
             }
+        } else {
+            console.log("Cannot select tile that is not in the rack:", tile);
         }
     }
  
@@ -672,13 +682,21 @@ export class ScrabblePlayerPanel extends SvgPlus {
         return this.rackEl.isSwapMode;
     }
 
+    selectTile(tile) {
+        console.log("selectTile", tile);
+        this.rackEl.selectTile(tile);
+    }
+
     placeTile(tileId, row, col) {
+
         const tile = this.getTileById(tileId);
         if (tile) {
+
             let oldTile = this.getTileByPosition(row, col);
             if (oldTile) {
                 this.state.returnTileToRack(oldTile.id);
             }
+            playSound("place");
             this.state.moveToPendingPosition(tile.id, row, col);
             this.#update();
         }

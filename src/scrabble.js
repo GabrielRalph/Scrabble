@@ -4,7 +4,10 @@ import { ScrabblePlayerPanel, } from "./ui/scrabble-player-panel.js";
 import { GameState } from "./scrabble-state.js";
 
 const PICK_MSG = "Pick tiles<br/>to swap";
-
+function playSound(sound) {
+    let audio = new Audio(import.meta.resolve(`../../assets/sounds/${sound}.ogg`));
+    audio.play();
+}
 
 class ScrabbleStartOverlay extends GridLayout {
     /** @param {ScrabbleGame} game*/
@@ -111,7 +114,10 @@ export class ScrabbleGame extends ShadowElement {
                 type: "lightBlue",
                 displayValue: "Place",
                 events: {
-                    "access-click": () => this.#call("commitTiles")
+                    "access-click": () => {
+                        playSound("submit");
+                        this.#call("commitTiles")
+                    }
                 }
             }],
         ], 1, 0);
