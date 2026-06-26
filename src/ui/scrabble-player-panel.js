@@ -125,7 +125,6 @@ class TileLetters extends SvgPlus {
     }
 }
 
-
 class GroupHighlight extends SvgPlus {
    
     /**
@@ -287,6 +286,10 @@ class BoardSquare extends AccessButton {
             const tileId = e.dataTransfer.getData("text/tile-id");
             board.placeTile(tileId, row, col);
         });
+    }
+
+    getSize() {
+        return this.clientWidth * 1.1;
     }
 
     set tile(tile) {
@@ -485,8 +488,22 @@ class RackTile extends AccessButton {
     get tile() {
         return this.#tile;
     }
+
+    getSize() {
+        return this.clientWidth * 1.2;
+    }
 }
 
+class TileButton extends AccessButton {
+    constructor(icon) {
+        super("rack");
+        this.class = "tile btn";
+        this.createChild(TileLetters, {}, {icon});
+    }
+    getSize() {
+        return this.clientWidth * 1.2;
+    }
+}
 export class Rack extends SvgPlus {
     #selectedTile = null;
     #selectedTiles = new Set();
@@ -495,11 +512,10 @@ export class Rack extends SvgPlus {
     constructor(board) {
         super("scrabble-rack");
 
-        this.createChild(AccessButton, {
-            class: "tile btn",
+        this.createChild(TileButton, {
             styles: { "grid-column": "1" },
             events: {"access-click": () => this.shuffle()},
-        }, "rack").createChild(TileLetters, {}, {icon: "#icon-shuffle"});
+        }, "#icon-shuffle");
 
         this.rack = this.createChild("div", {styles: {display: "contents"}});
 
@@ -507,13 +523,13 @@ export class Rack extends SvgPlus {
             let e2 = new AccessEvent("cancel-swap", e, {bubbles: true});
             this.dispatchEvent(e2);
         }
-        this.recallButton = this.createChild(AccessButton, {
-            class: "tile btn",
+        this.recallButton = this.createChild(TileButton, {
             styles: { "grid-column": "9" },
             events: {"access-click": (e) => 
                 this.#isSwapMode ? cancel(e) : board.returnAllTilesToRack()
             },
-        }, "rack")
+        }, "#icon-reset")
+
         this.isSwapMode = false;
     }
 
