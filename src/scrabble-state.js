@@ -82,6 +82,7 @@ export const MOVE_TYPES = {
     place: 0,
     exchange: 1,
     skip: 2,
+    resign: 3,
 }
 const MOVE_TYPE_NAMES = Object.fromEntries(Object.entries(MOVE_TYPES).map(([key, value]) => [value, key]));
 
@@ -920,9 +921,19 @@ class GameState {
         if (this.#moves.join("").match(new RegExp(`${MOVE_TYPES.skip}{2,}`, "g"))) {
             isWinner = true;
         }
+
+        let possible = playerScores;
+        let movesByPlayer = this.#moves.map((move, index) => [move, index % this.players.length]);
+        let resign = movesByPlayer.find(([move]) => move === MOVE_TYPES.resign);
+        if (resign) {
+            isWinner = true;
+            let possible = playerScores.filter(player => player.playerIndex !== resign[1]);
+        } 
+
         if (isWinner) {
-            winner = playerScores.reduce((max, player) => player.score > max.score ? player : max, {score: -Infinity});
+            winner = possible.reduce((max, player) => player.score > max.score ? player : max, {score: -Infinity});
         }
+
         return {
             isWinner,
             winner,
@@ -945,8 +956,10 @@ class GameState {
         return this.#tiles.map(tile => tile.snapshot);
     }
 
-
-   
+    
+    get moves() {
+        return [...this.#moves];
+    }
 
 
 
@@ -1050,6 +1063,10 @@ class GameState {
         this.#makeMove(MOVE_TYPES.skip);
     }
 
+    resign() {
+        this.#makeMove(MOVE_TYPES.resign);
+    }
+
 
     /** 
      * @param {number} row
@@ -1058,8 +1075,6 @@ class GameState {
     isCellOccupied(row, col) {
         return this.#getTileAt(row, col) !== null;
     }
-
-   
 
     
     toString_v0() {

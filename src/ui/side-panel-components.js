@@ -1,5 +1,5 @@
 import { GridIcon, GridLayout, SvgPlus } from "../squidly-utils.js";
-import { GameState, PREMIUMS } from "../scrabble-state.js";
+import { GameState, MOVE_TYPES, PREMIUMS } from "../scrabble-state.js";
 
 export class ScoreBoard extends SvgPlus{
     constructor() {
@@ -58,6 +58,20 @@ export class ScrabbleBag extends SvgPlus {
             counts[tile.letter] = (counts[tile.letter] || 0) + 1;
         });
 
+        const vowels = "AEIOU";
+        let vowelCount = 0;
+        let consonantCount = 0;
+        Object.keys(counts).forEach(letter => {
+            if (vowels.includes(letter)) {
+                vowelCount += counts[letter];
+            } else {
+                consonantCount += counts[letter];
+            }
+        });
+        this.vowelCount.textContent = vowelCount;
+        this.consonantCount.textContent = consonantCount;
+        this.bagCount.textContent = tiles.length;
+
         this.bagLetters.innerHTML = "";
         Object.keys(counts).sort((a, b) => a.localeCompare(b)).forEach((letter) => {
             let n = counts[letter] || 0;
@@ -89,10 +103,18 @@ export class ScrabbleHistory extends SvgPlus {
       this.historyList.createChild("div", { class: "history-empty", content: "Moves, swaps, passes, and end-game scoring will appear here." });
     } else {
         let history = state.history;
-        history.slice().reverse().forEach((move) => {
-            const mi = move.moveIndex;
-            if (mi === Infinity) return;
-            const playerIndex = move.placedTiles[0].playerIndex;
+        let moves = state.moves;
+        let n = state.players.length;
+
+        /** @type {Object<string, import("../scrabble-state.js").MoveInfo>} */
+        let historyByMoveIndex = {};
+        history.forEach((move) => {
+            if (move.moveIndex === Infinity) return;
+            historyByMoveIndex[move.moveIndex] = move;
+        });
+  
+        moves.forEach((moveType, moveIndex) => {
+            const playerIndex = moveIndex % n;
     
             const item = this.historyList.createChild("article", { 
                 class: `history-item current-player-${playerIndex ?? 0}` 
@@ -101,23 +123,34 @@ export class ScrabbleHistory extends SvgPlus {
             const playerName = state.players[playerIndex]?.name || "Unknown Player";
             const meta = item.createChild("div", { 
                 class: "history-meta" ,
-                content: `<span> <i player-tag="${playerIndex}"></i> ${playerName}</span><span>Turn ${mi+ 1}</span>`
+                content: `<span> <i player-tag="${playerIndex}"></i> ${playerName}</span><span>Turn ${moveIndex+ 1}</span>`
             })
 
-            const words = move.wordInfo.map(w => 
-                w.tiles.map(tile => {
-                    let isNew = tile.moveIndex == mi ;
-                    let rc = `${tile.row},${tile.col}`;
-                    let premium = isNew && PREMIUMS.has(rc) ? (" " + PREMIUMS.get(`${tile.row},${tile.col}`)) : "";
-                    return `<i ${isNew ? "" : "use"}${premium}>${tile.letter}</i>`
-                }
-            ).join("")).join(" + ");
-           
-           
-            const title = item.createChild("div", { 
-                class: "history-title",
-                content:  `<span>${words}</span><strong>${move.totalScore > 0 ? "+" : ""}${move.totalScore} pts</strong>`
-            })
+            if (moveType === MOVE_TYPES.place) {
+                const move = historyByMoveIndex[moveIndex];
+                const words = move.wordInfo.map(w => 
+                    w.tiles.map(tile => {
+                        let isNew = tile.moveIndex == moveIndex;
+                        let rc = `${tile.row},${tile.col}`;
+                        let premium = isNew && PREMIUMS.has(rc) ? (" " + PREMIUMS.get(`${tile.row},${tile.col}`)) : "";
+                        return `<i ${isNew ? "" : "use"}${premium}>${tile.letter}</i>`
+                    }
+                ).join("")).join(" + ");
+               
+               
+                const title = item.createChild("div", { 
+                    class: "history-title",
+                    content:  `<span>${words}</span><strong>${move.totalScore > 0 ? "+" : ""}${move.totalScore} pts</strong>`
+                })
+            } else {
+                let text = (moveType === MOVE_TYPES.exchange) ? "Swapped" : (
+                    (moveType === MOVE_TYPES.skip) ? "Skipped" : "resigned"
+                );
+                const title = item.createChild("div", { 
+                    class: "history-title",
+                    content:  `<span>${text}</span><strong>0 pts</strong>`
+                })
+            }
         });
     }
   }

@@ -37,7 +37,7 @@
     font-size: 1.8em;
 }
 
-grid-layout[my-turn="false"] > access-button {
+[locked] access-button[lockable] {
     opacity: 0.5;
     pointer-events: none;
 }
@@ -110,6 +110,10 @@ scrabble-board {
     max-width: 100%;
     max-height: 100%;
     aspect-ratio: 1;
+}
+
+[locked] scrabble-board {
+    pointer-events: none;
 }
 
 /* ~~~~~~~~~~~~~~~  BOARD SQUARES ~~~~~~~~~~~~~~~~ */
@@ -221,7 +225,7 @@ scrabble-rack {
 [player = "1"] scrabble-rack {
     border-color: var(--player-1);
 }
-[my-turn="false"] scrabble-rack {
+[locked] scrabble-rack {
     opacity: 0.5;
     pointer-events: none;
 }
@@ -325,8 +329,13 @@ i[player-tag = "1"] {
 .side-panel {
     width: 22vw;
     display: grid;
+
     gap: var(--gap);
-    grid-template-rows: auto auto 1fr;
+    grid-template-rows: auto auto auto 1fr;
+}
+
+.mode-information {
+    text-align: center;
 }
 
 /* ~~~~~~~~~~~~~~~  PANEL CARD ~~~~~~~~~~~~~~~~ */

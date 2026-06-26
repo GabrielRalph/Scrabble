@@ -12,28 +12,35 @@ const game = document.querySelector("scrabble-game");
 
 const loading = ScrabbleGame.load()
 
+
+game.modeInformation.innerHTML = "<b>MODE:</b> Cooperative";
 if (window.SquidlyAPI) {
     window.SquidlyAPI.setGridSize(5,6);
-    let isCoop = false;
     let playerIndex = null;
+    game.playerIndex = null;
+    
+    let isCoop = false;
+    function updateCoopState(val) {
+        isCoop = val;
+        game.locked = !isCoop && playerIndex !== game.currentPlayerIndex;
+        game.modeInformation.innerHTML = "<b>MODE:</b> " + (isCoop ? "Cooperative" : "Competitive");
+    }
 
     game.addEventListener("change", () => {
         const state = game.state;
         SquidlyAPI.firebaseSet("state", state);
+        updateCoopState(isCoop);
     })
 
     game.addEventListener("start-game", (e) => {
         isCoop = e.coop;
-        if (isCoop) {
-            game.playerIndex = null;
-        } else {
-            game.playerIndex = playerIndex;
-        }
         console.log("Starting game. Coop mode:", isCoop);
         SquidlyAPI.firebaseSet("coop", isCoop);
         SquidlyAPI.firebaseSet("state", new GameState().toString());
+        updateCoopState(isCoop);
     })
 
+    
    
     const [p1Name, p2Name] = await Promise.all([
         await new Promise(resolve => {
@@ -52,11 +59,6 @@ if (window.SquidlyAPI) {
             SquidlyAPI.addSessionInfoListener((info) => {
                 console.log("session info", info)
                 playerIndex = info.user === "host" ? 0 : 1;
-                if (isCoop) {
-                    game.playerIndex = null;
-                } else {
-                    game.playerIndex = playerIndex;
-                }
                 resolve();
             });
         }),
@@ -69,13 +71,8 @@ if (window.SquidlyAPI) {
         }),
         
         await new Promise(resolve => {
-            SquidlyAPI.firebaseOnValue("coop", (isCoop) => {
-                isCoop = isCoop;
-                if (isCoop) {
-                    game.playerIndex = null;
-                } else {
-                    game.playerIndex = playerIndex;
-                }
+            SquidlyAPI.firebaseOnValue("coop", (ic) => {
+                updateCoopState(ic);
             });
         })
     ]);
@@ -85,8 +82,8 @@ if (window.SquidlyAPI) {
 
 } else {
     game.playerIndex = null;
+
     game.addEventListener("change", () => {
-        // console.log("State changed. New state:", game.state);
         console.log("State changed. New state:", game.state);
     })
 }

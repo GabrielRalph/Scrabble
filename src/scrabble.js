@@ -81,16 +81,16 @@ export class ScrabbleGame extends ShadowElement {
     #state = new GameState();
     #playerIndex = 0;
 
-    ACTIONS_BUTTONS = [
-        {
-            label: "Action"
-        }
-    ]
-
     constructor(el) {
         super(el, new GridLayout(5,6));
        
-        [[this.swapButton], [this.skipButton], [this.placeButton]] = this.root.addGridIcons([
+        [[this.resign], [this.swapButton], [this.skipButton], [this.placeButton]] = this.root.addGridIcons([
+            [{
+                displayValue: "Resign",
+                events: {
+                    "access-click": () => this.#call("resign")
+                }
+            }],
             [{
                 displayValue: "Swap",
                 events: {
@@ -110,11 +110,16 @@ export class ScrabbleGame extends ShadowElement {
                     "access-click": () => this.#call("commitTiles")
                 }
             }],
-        ], 2, 0);
+        ], 1, 0);
+        this.swapButton.toggleAttribute("lockable", true);
+        this.skipButton.toggleAttribute("lockable", true);
+        this.placeButton.toggleAttribute("lockable", true);    
+
         const main = this.root.add(this.createChild("div", {class: "main"}), [0,4], [1,5]);
 
         this.ppanel = main.createChild(ScrabblePlayerPanel);
         const sidePanel = main.createChild("div", {class: "side-panel"});
+        this.modeInformation = sidePanel.createChild("div", {class: "mode-information"});
         this.scoreBoard = sidePanel.createChild(ScoreBoard);
         this.tileBage = sidePanel.createChild(ScrabbleBag);
         this.scoreHistory = sidePanel.createChild(ScrabbleHistory);
@@ -144,7 +149,6 @@ export class ScrabbleGame extends ShadowElement {
         this.startOverlay = this.root.createChild(ScrabbleStartOverlay, {}, this);
         this.#onStateUpdate();
     }
-
 
     swap() {
         if (this.ppanel.isSwapMode) {
@@ -192,6 +196,14 @@ export class ScrabbleGame extends ShadowElement {
         }
     }
 
+    set locked(value) {
+        this.root.toggleAttribute("locked", value);
+    }
+
+    get locked() {
+        return this.root.hasAttribute("locked");
+    }
+
     set playerIndex(value) {
         if (typeof value !== "number" || value < 0 || value >= this.#state.players.length) {
             value = null;
@@ -200,8 +212,13 @@ export class ScrabbleGame extends ShadowElement {
         this.ppanel.playerIndex = this.showedPlayerIndex;
         this.#onStateUpdate();
     }
+
     get playerIndex() {
         return this.#playerIndex;
+    }
+
+    get currentPlayerIndex() {
+        return this.#state.currentPlayerIndex;
     }
 
     get showedPlayerIndex() {
@@ -211,6 +228,7 @@ export class ScrabbleGame extends ShadowElement {
     get state() {
         return this.#state.toString();
     }
+
     set state(value) {
         if (value == null) {
             this.#state = new GameState();
