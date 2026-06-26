@@ -112,8 +112,8 @@ export class ScrabbleHistory extends SvgPlus {
             if (move.moveIndex === Infinity) return;
             historyByMoveIndex[move.moveIndex] = move;
         });
-  
-        moves.forEach((moveType, moveIndex) => {
+        moves = moves.map((m, i) => [m, i]).reverse();
+        moves.forEach(([moveType, moveIndex]) => {
             const playerIndex = moveIndex % n;
     
             const item = this.historyList.createChild("article", { 
