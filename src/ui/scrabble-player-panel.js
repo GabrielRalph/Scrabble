@@ -135,8 +135,8 @@ class GroupHighlight extends SvgPlus {
         super("div");
         this.class = "highlight group";
         this.styles = {
-            "grid-row": `2 / ${BOARD_SIZE+2}`,
-            "grid-column": `2 / ${BOARD_SIZE+2}`,
+            "grid-row": `1 / ${BOARD_SIZE+1}`,
+            "grid-column": `1 / ${BOARD_SIZE+1}`,
         }
         const svg = this.createChild("svg", {
             viewBox: `0 0 ${T_S * BOARD_SIZE} ${T_S * BOARD_SIZE}`,
@@ -201,8 +201,8 @@ class WordHighlight extends SvgPlus {
         options = options || {};
         this.classList.add("highlight");
         this.styles = {
-            "grid-row": `${rowStart + 2} / ${rowEnd + 3}`,
-            "grid-column": `${colStart + 2} / ${colEnd + 3}`,
+            "grid-row": `${rowStart + 1} / ${rowEnd + 2}`,
+            "grid-column": `${colStart + 1} / ${colEnd + 2}`,
         }
         let colSpans = colEnd - colStart + 1;
         let rowSpans = rowEnd - rowStart + 1;
@@ -320,6 +320,7 @@ export class Board extends SvgPlus {
     constructor(root) {
         super("scrabble-board");
         let isLabels = false;
+        this.isLabels = isLabels;
     
         
         let relLabel = isLabels ? "0.5fr " : ""
