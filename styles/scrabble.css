@@ -87,6 +87,7 @@ grid-layout[my-turn="false"] > access-button {
 scrabble-player-panel {
     display: flex;
     flex-direction: column;
+    gap: var(--gap);
 }
 .board-container {
     position: relative;
@@ -211,10 +212,9 @@ scrabble-rack {
     display: grid;
     gap: 1px;
     grid-template-columns: repeat(9, 1fr);
-    margin-top: 0.5em;
     justify-content: center;
     background: white;
-    padding: 1.5vw;
+    padding: 0.8em;
     border-radius: 2vw;
     border: 2px solid var(--player-0);
 }

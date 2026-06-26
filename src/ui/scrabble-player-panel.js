@@ -165,8 +165,8 @@ class GroupHighlight extends SvgPlus {
             let lY = topLeftMostTile.r;
             let rX = 100;
         
-            let w = 600;
-            let h = 350;
+            let w = 800;
+            let h = 450;
 
             const g = svg.createChild("g", {class: "label"})
             g.createChild("rect", {
@@ -187,7 +187,7 @@ class GroupHighlight extends SvgPlus {
                 "text-anchor": "middle",
                 "dominant-baseline": "central",
                 class: "tile-letter",
-                "font-size": 300,
+                "font-size": 400,
                 "font-weight": "bold",
             });
         }
@@ -319,57 +319,65 @@ export class Board extends SvgPlus {
     /** @param {ScrabblePlayerPanel} root */
     constructor(root) {
         super("scrabble-board");
+        let isLabels = false;
+    
+        
+        let relLabel = isLabels ? "0.5fr " : ""
         this.styles = {
             display: "grid",
-            "grid-template-columns": `0.5fr repeat(${BOARD_SIZE}, 1fr)`,
-            "grid-template-rows": `0.5fr repeat(${BOARD_SIZE}, 1fr)`,
+            "grid-template-columns": `${relLabel}repeat(${BOARD_SIZE}, 1fr)`,
+            "grid-template-rows": `${relLabel}repeat(${BOARD_SIZE}, 1fr)`,
         }
         this.innerHTML = "";
-        this.createChild("div", {styles: {
-            "grid-row": 1,
-            "grid-column": 1,
-        }});
+        // this.createChild("div", {styles: {
+        //     "grid-row": 1,
+        //     "grid-column": 1,
+        // }});
         let GRID = []
-        for (let col = 0; col < BOARD_SIZE; col++) {
-            this.createChild("div", {
-                class: "board-label",
-                styles: {
-                    "grid-row": 1,
-                    "grid-column": col + 2,
-                }
-            })
-            .createChild("svg", {viewBox: "0 0 100 50"}).createChild("text", {
-                x: "50", y: "25",
-                content: String.fromCharCode(65 + col),
-                fill: "currentColor",
-                "text-anchor": "middle",
-                "dominant-baseline": "central",
-                "font-size": 32,
-            });
+        if (isLabels) {
+            for (let col = 0; col < BOARD_SIZE; col++) {
+                this.createChild("div", {
+                    class: "board-label",
+                    styles: {
+                        "grid-row": 1,
+                        "grid-column": col + 2,
+                    }
+                })
+                .createChild("svg", {viewBox: "0 0 100 50"}).createChild("text", {
+                    x: "50", y: "25",
+                    content: String.fromCharCode(65 + col),
+                    fill: "currentColor",
+                    "text-anchor": "middle",
+                    "dominant-baseline": "central",
+                    "font-size": 32,
+                });
+            }
         }
 
         for (let row = 0; row < BOARD_SIZE; row++) {
             let ROW = [];
-            this.createChild("div", {
-                class: "board-label",
-                styles: {
-                    "grid-row": row + 2,
-                    "grid-column": 1,
-                }
-            })
-            .createChild("svg", {viewBox: "0 0 50 100"}).createChild("text", {
-                x: "25", y: "50",
-                content:  String(row + 1),
-                fill: "currentColor",
-                "text-anchor": "middle",
-                "dominant-baseline": "central",
-                "font-size": 32,
-            });
+            if (isLabels) {
+                this.createChild("div", {
+                    class: "board-label",
+                    styles: {
+                        "grid-row": row + 2,
+                        "grid-column": 1,
+                    }
+                })
+                .createChild("svg", {viewBox: "0 0 50 100"}).createChild("text", {
+                    x: "25", y: "50",
+                    content:  String(row + 1),
+                    fill: "currentColor",
+                    "text-anchor": "middle",
+                    "dominant-baseline": "central",
+                    "font-size": 32,
+                });
+            }
          
             for (let col = 0; col < BOARD_SIZE; col++) {
                 ROW.push(this.createChild(BoardSquare, {styles: {
-                    "grid-row": row + 2,
-                    "grid-column": col + 2,
+                    "grid-row": row + (isLabels ? 2 : 1),
+                    "grid-column": col + (isLabels ? 2 : 1),
                 }}, row, col, root))
             }
             GRID.push(ROW);
