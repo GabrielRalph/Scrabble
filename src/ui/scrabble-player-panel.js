@@ -12,7 +12,7 @@ console.log("Tile image light:", tileImageLight, "dark:", tileImageDark);
 
 const T_S = 1080;
 const T_B = 40;
-
+const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 const DEFS = `<svg class = "svg-defs" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <defs>
             <clipPath id="tile-clip-path">
@@ -232,7 +232,7 @@ class BoardSquare extends AccessButton {
       * @param {ScrabblePlayerPanel} board
      */
     constructor(row, col, board) {
-        super("r-"+row);
+        super("row-"+alphabet[row]);
         this.row = row;
         this.col = col;
         let premiumClass = PREMIUMS.get(`${row},${col}`) || "";
@@ -374,7 +374,6 @@ export class Board extends SvgPlus {
                     "font-size": 32,
                 });
             }
-         
             for (let col = 0; col < BOARD_SIZE; col++) {
                 ROW.push(this.createChild(BoardSquare, {styles: {
                     "grid-row": row + (isLabels ? 2 : 1),

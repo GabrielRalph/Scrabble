@@ -86,24 +86,28 @@ export class ScrabbleGame extends ShadowElement {
        
         [[this.resign], [this.swapButton], [this.skipButton], [this.placeButton]] = this.root.addGridIcons([
             [{
+                group: "apps",
                 displayValue: "Resign",
                 events: {
                     "access-click": () => this.#call("resign")
                 }
             }],
             [{
+                group: "apps",
                 displayValue: "Swap",
                 events: {
                     "access-click": () => this.swap()
                 }
             }],
             [{
+                group: "apps",
                 displayValue: "Skip",
                 events: {
                     "access-click": () => this.#call("skipTurn")
                 }
             }],
             [{
+                group: "apps",
                 type: "lightBlue",
                 displayValue: "Place",
                 events: {
@@ -111,9 +115,14 @@ export class ScrabbleGame extends ShadowElement {
                 }
             }],
         ], 1, 0);
+        this.swapButton.group = "apps";
+        this.placeButton.group = "apps";
+        this.skipButton.group = "apps";
+        this.resign.group = "apps";
         this.swapButton.toggleAttribute("lockable", true);
+        this.resign.toggleAttribute("lockable", true);
         this.skipButton.toggleAttribute("lockable", true);
-        this.placeButton.toggleAttribute("lockable", true);    
+        this.placeButton.toggleAttribute("lockable", true);  
 
         const main = this.root.add(this.createChild("div", {class: "main"}), [0,4], [1,5]);
 
