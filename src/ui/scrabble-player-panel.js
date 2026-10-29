@@ -251,10 +251,10 @@ class BoardSquare extends AccessButton {
                 board.placeTile(selectedTile.id, row, col);
             } else if (this.tile) {
                 const {tile} = this;
-                board.returnTileToRack(tile.id);
-                // tile.state = TILE_STATES.inPlayerRack;
-                // board.selectTile(tile)
-                playSound("to-rack");
+                if (tile.state === TILE_STATES.pending) {
+                    board.returnTileToRack(tile.id);
+                    playSound("to-rack");
+                }
             }
         });
 
